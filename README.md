@@ -5,6 +5,14 @@ Solar-powered light installation · 16×16 LED matrix · Arduino
 
 <img src="docs/cover.jpg" alt="SUN, frosted acrylic enclosure with a toggle switch on top" width="480">
 
+<p>
+  <img src="docs/sun-yellow.jpg" alt="Yellow sun on a red background" width="32%">
+  <img src="docs/sun-transition.jpg" alt="Transition, orange" width="32%">
+  <img src="docs/sun-red.jpg" alt="Red sun on a yellow background" width="32%">
+</p>
+
+*The sun in its color cycle: yellow on red, the orange transition, and the inverted state, red on yellow.*
+
 ---
 
 ## About the work
