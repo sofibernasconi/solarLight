@@ -1,0 +1,6 @@
+# Video files (kept out of the repository)
+*.mp4
+*.mov
+
+# System files
+.DS_Store

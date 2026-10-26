@@ -1,6 +1,9 @@
+// SUN (Stored Until Needed)
+// Sun animation on a 16x16 WS2812B LED matrix (4 x 8x8 panels)
+
 #include <FastLED.h>
 
-#define LED_PIN 6
+#define LED_PIN 2
 #define NUM_LEDS 256
 #define WIDTH 16
 #define HEIGHT 16
@@ -8,6 +11,19 @@
 
 CRGB leds[NUM_LEDS];
 
+// COLOR PALETTE: change colors here only
+CRGB COLOR_YELLOW = CRGB(255, 100, 0);
+CRGB COLOR_RED    = CRGB(255, 0, 0);
+CRGB COLOR_ORANGE = CRGB(255, 100, 0);
+
+// choose which colors the animation uses
+CRGB CIRCLE_COLOR_A = COLOR_YELLOW;
+CRGB CIRCLE_COLOR_B = COLOR_RED;
+
+CRGB BG_COLOR_A = COLOR_RED;
+CRGB BG_COLOR_B = COLOR_YELLOW;
+
+// maps (x, y) coordinates to the LED index across the four 8x8 panels
 uint16_t XY(uint8_t x, uint8_t y) {
   uint8_t panelX = x / 8;
   uint8_t panelY = y / 8;
@@ -35,13 +51,13 @@ void setup() {
 void loop() {
   float cx = 7.5;
   float cy = 7.5;
-  float r = 6.0;          // radio del círculo
-  float edge = 1.5;       // grosor del borde difuminado
+  float r = 6.5; // circle radius
+  float edge = 1.5;
 
-  float t = (sin(millis() * 0.001) + 1.0) * 0.5;
+  float t = (sin(millis() * 0.0005) + 1.0) * 0.5; // speed
 
-  CRGB circleColor = blend(CRGB::Yellow, CRGB::Red, (uint8_t)(255 * t));
-  CRGB bgColor     = blend(CRGB::Red, CRGB::Yellow, (uint8_t)(255 * t));
+  CRGB circleColor = blend(CIRCLE_COLOR_A, CIRCLE_COLOR_B, (uint8_t)(255 * t));
+  CRGB bgColor     = blend(BG_COLOR_A, BG_COLOR_B, (uint8_t)(255 * t));
 
   for (int y = 0; y < HEIGHT; y++) {
     for (int x = 0; x < WIDTH; x++) {
@@ -53,7 +69,7 @@ void loop() {
         drawPixelXY(x, y, circleColor);
       }
       else if (dist <= r) {
-        float k = (dist - (r - edge)) / edge;   // 0 a 1 en el borde
+        float k = (dist - (r - edge)) / edge;
         CRGB edgeColor = blend(circleColor, bgColor, (uint8_t)(255 * k));
         drawPixelXY(x, y, edgeColor);
       }
