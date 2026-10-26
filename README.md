@@ -3,6 +3,8 @@
 **Sofía Bernasconi, 2026**
 Solar-powered light installation · 16×16 LED matrix · Arduino
 
+<img src="docs/cover.jpg" alt="SUN, frosted acrylic enclosure with a toggle switch on top" width="480">
+
 ---
 
 ## About the work
@@ -54,7 +56,8 @@ docs/
 | Battery | Voltaic battery pack, 5V output |
 | Solar panel | 6V |
 | Power breakout | CP2104 USB-to-serial board, used to take VCC and GND from the battery's USB output |
-| Enclosure | Laser-cut acrylic, file in `fabrication/` |
+| Enclosure | Laser-cut frosted acrylic, file in `fabrication/` |
+| Toggle switch | On/off, mounted on top of the enclosure |
 | Distance sensor (experiment only) | VL53L0X time-of-flight sensor, I2C |
 
 ### Wiring
