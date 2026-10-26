@@ -24,7 +24,7 @@ More about my work: [sofiabernasconi.com](https://sofiabernasconi.com)
    (harvests)          (stores)            (animation)        (4 × 8×8 WS2812B)
 ```
 
-The solar panel charges a battery pack during the day. The battery powers the Arduino and the LED matrix, which plays the sun animation: a circle of light whose color shifts slowly between yellow and red, while the background shifts the opposite way.
+The solar panel charges a battery pack during the day. The battery powers the Arduino and the LED matrix, which plays the sun animation in a continuous loop: a circle of light with a soft edge whose color shifts between yellow and red, while the background shifts the opposite way, from red to yellow. One full color cycle takes about six seconds.
 
 ---
 
@@ -34,9 +34,8 @@ The solar panel charges a battery pack during the day. The battery powers the Ar
 arduino/
   sun/sun.ino                                   Final code used in the piece
   experiments/
-    sun_distance_sensor/sun_distance_sensor.ino Version with a distance sensor (tested, not used)
-  tests/
-    sun_basic/sun_basic.ino                     First version of the animation
+    sun_color_palette/sun_color_palette.ino     Version with a configurable color palette
+    sun_distance_sensor/sun_distance_sensor.ino Version with a distance sensor
 fabrication/
   enclosure-laser-cut.ai                        Laser-cut file for the enclosure
 docs/
@@ -86,19 +85,29 @@ Inside each panel the LEDs run row by row, left to right. If your panels are wir
 
 ## Running the code
 
-1. Install the [FastLED](https://github.com/FastLED/FastLED) library from the Arduino Library Manager. For the sensor experiment, also install **Adafruit_VL53L0X**.
+1. Install the [FastLED](https://github.com/FastLED/FastLED) library from the Arduino Library Manager.
 2. Open `arduino/sun/sun.ino` in the Arduino IDE.
 3. Select your board and port, and upload.
 
 Adjustable values in `sun.ino`:
-- **Colors:** the palette at the top of the sketch (`COLOR_YELLOW`, `COLOR_RED`, `COLOR_ORANGE`) and which colors the circle and background use (`CIRCLE_COLOR_A/B`, `BG_COLOR_A/B`).
 - `BRIGHTNESS`: overall brightness (0–255). A lower value saves battery.
 - `r`: radius of the sun. `edge`: width of its soft edge.
-- The `0.0005` value in the line marked `// speed`: how fast the colors shift.
+- The `0.001` value in the line marked `// color shift speed`: how fast the colors shift. A smaller number makes it slower.
+- The colors used in `circleColor` and `bgColor` (`CRGB::Yellow`, `CRGB::Red`).
 
-### The distance sensor experiment
+---
 
-`sun_distance_sensor.ino` makes the sun emerge from the center when someone approaches: it grows and brightens as the person gets closer, and the background appears once the sun is almost fully formed. The sensor range is set with `DISTANCE_FAR_MM` (600 mm, off) and `DISTANCE_NEAR_MM` (120 mm, fully on).
+## Experiments
+
+These versions were tested during the process and not used in the final piece. Both use the same LED matrix and wiring.
+
+### Color palette
+
+`sun_color_palette.ino` keeps the same animation and adds a color palette at the top of the sketch, so the colors can be changed in one place (`COLOR_YELLOW`, `COLOR_RED`, `COLOR_ORANGE`, and which ones the circle and background use). The sun is slightly larger (radius 6.5) and the colors shift at half the speed.
+
+### Distance sensor
+
+`sun_distance_sensor.ino` makes the sun emerge from the center when someone approaches: it grows and brightens as the person gets closer, and the background appears once the sun is almost fully formed. The sensor range is set with `DISTANCE_FAR_MM` (600 mm, off) and `DISTANCE_NEAR_MM` (120 mm, fully on). It needs the **Adafruit_VL53L0X** library.
 
 I did not use this version in the final piece because I did not like how the sensor looked in the enclosure design. Integrating it is one of the next steps.
 
